@@ -1,0 +1,164 @@
+1. wpisałem polecenie "Set-ExecutionPolicy Bypass" po czym zgodziłem się na zmianę 
+wprowadzając "Y";
+
+2. wpisałem "Get-Help Get-ExecutionPolicy" po czym wyświetliła się propozycja abym
+zaktualizował zasoby pomocy, zgodziłem się po aktalizacji wpisałem komendę jeszcze raz 
+i wyświetliła się pomoc; 
+
+3. wpisałem "Get-Help Get-ExecutionPolicy -Examples" po czym wyśiwetliły się przykłady;
+
+4.wpisałem "Get-Module -ListAvailable" po czym powershell zwrócił wszystkie dostępne
+w tej chwili moduły;
+
+5. wpisałem "Get-Module -ListAvailable | ? {$_.Version -ge "2.0.0.0"}" po czym zwróciły
+się wszystkie moduły których wersja jest >=2;
+
+6. wpisałem "Get-Module -ListAvailable | ? {$_.Version -ge "2.0.0.0"} | % {Get-Command 
+-Module $_.Name}" po czym wyświetliły się wszystkie polecenia w dostepnych modułach, 
+których wersja >= 2;
+
+7.wpisałem "Get-Module -ListAvailable | ? {$_.Version -ge "2.0.0.0"} | % {Get-Command 
+-Module $_.Name} | ? {($_.Name -like "Add-*") -or ($_.Name -like "Get-*")}" po czym 
+otrzymałem jw. ale wszystkie te które mają w nazwie "Add-" lub "Get-";
+
+8. Powyższe wyniki w postaci tabelki graficznej w nowym oknie za pomocą komendy "Get-Module 
+-ListAvailable | ? {$_.Version -ge "2.0.0.0"} | % {Get-Command -Module $_.Name} | ? 
+{($_.Name -like "Add-*") -or ($_.Name -like "Get-*")} | Out-GridView";
+
+9. JW tylko do pliku za pomocą komendy "$nazwaPliku = "mojaNazwaPliku.txt"",
+a później wpisanie do pliku "Get-Module -ListAvailable | ? {$_.Version -ge "2.0.0.0"} | % 
+{Get-Command -Module $_.Name} | ? {($_.Name -like "Add-*") -or ($_.Name -like "Get-*")} | 
+Out-File $env:TEMP\$nazwaPliku" (niestety nie działa).
+
+10. Tylko aby się przetworzyło "Get-Module -ListAvailable | ? {$_.Version -ge "2.0.0.0"} | 
+% {Get-Command -Module $_.Name} | ? {($_.Name -like "Add-*") -or ($_.Name -like "Get-*")} | 
+Out-Null" (niestety nie działa).
+
+11. Za pomocą "Import-Module BitsTransfer" załadujemy moduł do zarządzania przesyłaniem danych
+w tle (niestety nie działa).
+
+12. "ipmo BitsTransfer" nie działa;
+
+13. Po wpisaniu : "Get-Command -Module BitsTransfer" wylistowały się wszystkie komendy w tym 
+module;
+
+14. Po wpisaniu "$cred = Get-Credential" zalogowałem się s26844@pjwstk.edu.pl;
+
+15. Za pomocą komendy "Start-BitsTransfer -Source https://www.dobreprogramy.pl/colin-mcrae-
+rally-2-0,program,windows,6628705711732353 -Destination C:\ -Credential $cred -Authentication 
+Negotiate rozpocząłem pobieranie większego programu;
+
+16. Użyłem "Get-BitsTransfer" aby wyświetlić stan transferu;
+
+17.Aby zakończyć job transferu "Complete-BitsTransfer -BitsJob $job";
+
+18. Do mierzenia czasu użyłem Measure-Command "Measure-Command {Get-ChildItem -Path 
+C:\Windows}";
+
+19. Alias listowania plików "Get-Alias | ? {$_.Definition -like "Get-ChildItem"}";
+
+20. Wylistowanie plików z odstępem czasowym "ls C:\ | %{Sleep -Milliseconds 250; return $_} 
+| Format-Table"
+
+21. Uruchomiłem notatnik za pomocą wywołania "call" czyli "&" w następujący sposób: 
+"& C:\Windows\notepad.exe"
+
+22. Sprawdziłem jakie dyski są dostepne w powershellu za pomocą komendy "Get-PSDrive"
+
+23. Wchodzę do rejestru: "cd hklm:\"
+
+24. Przeglądam rejestr jako zwykły sytem plików: "cd .\SOFTWARE\Microsoft\Windows\
+CurrentVersion\Uninstall"
+
+25. Wylistowałem zawartość rejestru za pomocą komendy "ls";
+
+26. Wylistowałem w ładniejszej postaci: "ls | %{
+    Get-ItemProperty $_.pspath | Select-Object DisplayName, InstallDate, UninstallString
+} | Format-Table -AutoSize"
+
+27. Poniższej komendy nie uruchomiłem gdyż nei chcę mieć odinstalowanych aplikacji: 
+ls | %{
+    Get-ItemProperty $_.pspath | Select-Object DisplayName, InstallDate, UninstallString
+} | %{& $_.UninstallString}
+
+28. Wpisałem komendę WMI do zarządzania systemem: "Get-WmiObject -Class Win32_Product | 
+Format-Table -AutoSize".
+
+29. Aby wyeliminować numery z przodu tabeli wpisałem komendę "Get-WmiObject 
+-Class Win32_Product | Select-Object Name, Vendor | Format-Table -AutoSize"
+
+30. Aby wyświetlić wszystkie pakiety od Microsoftu wpisałem "Get-WmiObject -Class 
+Win32_Product | ?{$_.Vendor.toLower() -like "*microsoft*"} | Select-Object Name, Vendor | 
+Format-Table -AutoSize"
+
+31.Aby odinstalować wszystkie powyższe pakiety użylibyśmy poniższego bloku, który ja tylko
+sobie tutaj wypiszę: 
+#Get-WmiObject -Class Win32_Product | ?{$_.Vendor.toLower() -like "*microsoft*"} | %{
+#	$wmiProduct = $_
+#    $answer = Read-Host "Uninstall '$($wmiProduct.Name)' [y/n]"
+#    $answer = $answer.ToLower()
+#    switch($answer) {
+#        "y" {
+#            Write-Host -NoNewline -ForegroundColor Red "Removing: "
+#            Write-Host -ForegroundColor White "$($wmiProduct.Name)"
+#            # odkomentowanie poniższej lini spowoduje błąd braku uprawnień dla Twojego konta
+#            #$wmiProduct.Uninstall() # ta linia uruchamia deinstalację. Odkomentuj jeśli chcesz odinstalować wszystkie pakiety od Microsoftu. (nie polecam)
+#        }
+#        "n" {Write-Host "Ok. Skipping."}
+#        default {Write-Host -ForegroundColor Red "Unexpected value. Skipping uninstalling it."}
+#    }
+#}
+
+32. Wylistowanie dysków powershella: "Get-PSDrive";
+
+33. Załadowałem bibliotekę żeby można było skorzystać z notyfikacji:
+[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
+
+$icoPath = Get-Process -id $pid | Select-Object -ExpandProperty Path
+
+$myNotification = New-Object System.Windows.Forms.NotifyIcon
+$myNotification.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($icoPath)
+$myNotification.BalloonTipIcon = 'Error'
+$myNotification.BalloonTipText = "Your cat has meowed!" 
+$myNotification.BalloonTipTitle = "Cat Error"
+$myNotification.Visible = $True 
+$myNotification.ShowBalloonTip(10000)
+- wyskoczyła notyfikacja;
+
+34. Uruchomienie za pomocą funkcji i później wywołania:
+function GiveMePopup {
+    param(
+        [Parameter(Mandatory=$true)]
+        $Text,
+   
+        [Parameter(Mandatory=$true)]
+        $Title,
+   
+        [ValidateSet('None', 'Info', 'Warning', 'Error')]
+        $Icon = 'Info',
+
+        $Timeout = 10000
+    )
+    [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
+    $icoPath = Get-Process -id $pid | Select-Object -ExpandProperty Path
+    $myNotification = New-Object System.Windows.Forms.NotifyIcon
+    $myNotification.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($icoPath)
+    $myNotification.BalloonTipIcon = $Icon
+    $myNotification.BalloonTipText = $Text 
+    $myNotification.BalloonTipTitle = $Title
+    $myNotification.Visible = $True 
+    $myNotification.ShowBalloonTip(1000)
+}
+GiveMePopup -Text "Your cat has meowed!" -Title "Cat Error" -Icon Error
+- wyskakuje notyfikacja za każdym wywołaniem;
+
+35. Do powyższego wielokrotne wywołanie funkcji:
+For($i = 1; $i -le 10; $i++) {
+    GiveMePopup -Text "WTF-second passed!" -Title "WTF Notification" -Icon Info
+}
+- wyskakuje co sekundę, dziesięć razy;
+
+36. Maksymalnie 4 wiersze notyfikacji:
+GiveMePopup -Text "Pierwszy wiersz`nDrugi wiersz`nTrzeci wiersz`nCzwarty wiersz" 
+-Title "Długa informacja" -Icon Info
+
