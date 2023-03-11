@@ -1,0 +1,387 @@
+import java.sql.SQLOutput;
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+
+
+        zad1();
+        zad2();
+        zad3();
+        zad4();
+        zad5();
+        zad6();
+        zad7();
+        zad8();
+        zad9();
+        zad10();
+        zad11();
+        zad12();
+        zad13();
+        zad14();
+
+
+    }
+
+    public static void zad1() {
+
+        System.out.println("zad1: ");
+        System.out.println("Wprowadź wartość pierwszego boku: ");
+        Scanner scanner = new Scanner(System.in);
+        int a = scanner.nextInt();
+        System.out.println("Wprowadź wartość drugiego boku: ");
+        int b = scanner.nextInt();
+
+        System.out.println((double) a * b);
+    }
+
+    public static void zad2() {
+        System.out.println("zad2: ");
+        double c = Math.PI;
+        double d = Math.sqrt(c);
+        d *= 100;
+        d = Math.round(d);
+        d /= 100;
+        System.out.println(d);
+    }
+
+    public static void zad3() {
+        System.out.println("zad3: ");
+
+        System.out.println("Podaj dwa ciągi tekstowe rozdzielone znakiem spacji: ");
+        Scanner scanner = new Scanner(System.in);
+        String napis1 = scanner.next();
+        String napis2 = scanner.next();
+
+        System.out.println("\"%" + napis2 + " " + napis1 + "%\"");
+    }
+
+    public static void zad4() {
+        System.out.println("zad4: ");
+
+        int a;
+        int b;
+        int c;
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Podaj długość boku a ");
+        a = scanner.nextInt();
+        System.out.println("Podaj długość boku b ");
+        b = scanner.nextInt();
+        System.out.println("Podaj długość boku c ");
+        c = scanner.nextInt();
+        if (a >= 0 && b >= 0 && c >= 0) {
+            if (a + b > c && a + c > b && b + c > a) {
+                System.out.println("TAK");
+            } else {
+                System.out.println("NIE");
+            }
+        } else {
+            System.out.println("BŁĄD");
+        }
+    }
+
+    public static void zad5() {
+        System.out.println("zad5: ");
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Podaj numer miesiąca, którego ilość dni wyświetli program: ");
+
+        int input = scanner.nextInt();
+
+        switch (input) {
+            case 1 -> System.out.println("Styczeń: 31 dni");
+            case 2 -> System.out.println("Luty: 28 dni");
+            case 3 -> System.out.println("Marzec: 31 dni");
+            case 4 -> System.out.println("Kwiecień: 30 dni");
+            case 5 -> System.out.println("Maj: 31 dni");
+            case 6 -> System.out.println("Czerwiec: 30 dni");
+            case 7 -> System.out.println("Lipiec: 31 dni");
+            case 8 -> System.out.println("Sierpień: 31 dni");
+            case 9 -> System.out.println("Wrzesień: 30 dni");
+            case 10 -> System.out.println("Październik: 31 dni");
+            case 11 -> System.out.println("Listopad: 30 dni");
+            case 12 -> System.out.println("Grudzień: 31 dni");
+            default -> System.out.println("BŁĄD");
+        }
+    }
+
+    public static void zad6() {
+        System.out.println("zad6: ");
+        Scanner scanner = new Scanner(System.in);
+
+        double a;
+        double b;
+        double c;
+        double d;
+
+        System.out.println("Podaj pierwszą liczbę ");
+        a = scanner.nextInt();
+        System.out.println("Podaj drugą liczbę ");
+        b = scanner.nextInt();
+        System.out.println("Podaj trzecią liczbę ");
+        c = scanner.nextInt();
+
+        if (a > b) {
+            d = a;
+            a = b;
+            b = d;
+        }
+        if (a > c) {
+            d = a;
+            a = c;
+            c = d;
+        }
+        if (b > c) {
+            d = b;
+            b = c;
+            c = d;
+        }
+        System.out.println("Podane liczby w kolejności od najmniejszych do najwiekszych: " + a + " " + b + " " + c);
+        if (a < b) {
+            d = a;
+            a = b;
+            b = d;
+        }
+        if (a < c) {
+            d = a;
+            a = c;
+            c = d;
+        }
+        if (b < c) {
+            d = b;
+            b = c;
+            c = d;
+        }
+        System.out.println("Podane liczby w kolejności od najwiekszych do najmniejszych: " + a + " " + b + " " + c);
+    }
+
+    public static void zad7() {
+        System.out.println("zad7: ");
+        Scanner scanner = new Scanner(System.in);
+
+        int n;
+        int m;
+
+
+        System.out.println("Podaj liczbę naturalną n ");
+        n = scanner.nextInt();
+        System.out.println("Podaj liczbę naturalną m ");
+        m = scanner.nextInt();
+        if (n == m) {
+            int[] tab_n = new int[n];
+            int[] tab_m = new int[m];
+
+            for (int l = 0; l < tab_n.length; l++) {
+                System.out.println("Podaj wartość " + l + " elementu tablicy tab_n.");
+                tab_n[l] = scanner.nextInt();
+                System.out.println(l + " element tablicy tab_n =  " + tab_n[l]);
+            }
+            for (int p = 0; p < tab_m.length; p++) {
+                System.out.println("Podaj wartość " + p + " elementu tablicy tab_m.");
+                tab_m[p] = scanner.nextInt();
+                System.out.println(p + " element tablicy tab_m =  " + tab_m[p]);
+            }
+            int iloczynSkalarny = 0;
+            for (int r = 0; r < n; r++) {
+                iloczynSkalarny += tab_n[r] * tab_m[r];
+            }
+            System.out.println("Iloczyn skalarny wynosi: " + iloczynSkalarny);
+        } else {
+            System.out.println("BŁĄD");
+        }
+    }
+
+    public static void zad8() {
+        System.out.println("zad8: ");
+        Scanner scanner = new Scanner(System.in);
+
+        int n;
+        System.out.println("Podaj liczbę naturalną: ");
+        n = scanner.nextInt();
+        char znak = '*';
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j <= i; j++) {
+                System.out.print(znak);
+            }
+            System.out.println();
+        }
+        for (int i = n; i > 0; i--) {
+            for (int j = 1; j <= i; j++) {
+                System.out.print(znak);
+            }
+            System.out.println();
+        }
+        int spacja = n - 1;
+        int gwiazdka = 1;
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= spacja; j++) {
+                System.out.print(" ");
+            }
+            for (int j = 1; j <= gwiazdka; j++) {
+                System.out.print(znak);
+            }
+            System.out.println();
+            spacja--;
+            gwiazdka++;
+        }
+        for (int i = n; i > 0; i--) {
+            for (int j = 1; j <= spacja + 1; j++) {
+                System.out.print(" ");
+            }
+            for (int j = 1; j < gwiazdka; j++) {
+                System.out.print(znak);
+            }
+            System.out.println();
+            spacja++;
+            gwiazdka--;
+        }
+    }
+
+    public static void zad9() {
+        System.out.println("zad9: ");
+        System.out.println("Podaj słowo aby sprawdzić czy jest palindromem");
+
+        Scanner scanner = new Scanner(System.in);
+        String słowo = scanner.nextLine();
+        int dlugosc = słowo.length();
+
+        for (int i = 0; i < dlugosc / 2; i++) {
+            char znak_1 = słowo.charAt(i);
+            char znak_2 = słowo.charAt(słowo.length() - i - 1);
+
+            if (znak_1 != znak_2) {
+                System.out.println("NIE");
+                break;
+            } else {
+                System.out.println("TAK");
+                break;
+            }
+        }
+    }
+    public static void zad10() {
+        System.out.println("zad10: ");
+        Scanner scanner = new Scanner(System.in);
+
+        int z;
+        int x;
+
+        System.out.println("Podaj wartość z ");
+        z = scanner.nextInt();
+        System.out.println("Podaj wartość x ");
+        x = scanner.nextInt();
+
+        int[][] tablica1 = new int[z][x];
+
+        for (int i = 0; i < z; i++) {
+            for (int j = 0; j < x; j++) {
+                System.out.println("Podaj kolejne wartości tablicy: ");
+                tablica1[i][j] = scanner.nextInt();
+            }
+        }
+        System.out.println("Macierz przed transpozycją: ");
+        for (int i = 0; i < z; i++) {
+            for (int j = 0; j < x; j++) {
+                System.out.print(tablica1[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        System.out.println("Macierz po transpozycji: ");
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < z; j++) {
+                System.out.print(tablica1[j][i] + " ");
+            }
+            System.out.println();
+
+        }
+    }
+    public static void zad11() {
+        System.out.println("zad11: ");
+        System.out.println("Podaj zdanie aby spradzić czy jest pangramem");
+
+        Scanner scanner = new Scanner(System.in);
+        String słowo = scanner.nextLine();
+        String s = słowo.toLowerCase();
+        System.out.println(s);
+        int dlugosc = s.length();
+
+
+        if(dlugosc < 26){
+            System.out.println("false");
+        }
+        else
+            for(char ch = 'a'; ch <= 'z'; ch++){
+                if(s.indexOf(ch) < 0){
+                    System.out.println("false");
+                }
+                else {
+                    System.out.println("true");
+                    break;
+                }
+
+            }
+    }
+    public static void zad12() {
+        System.out.println("zad12: ");
+        Scanner scanner = new Scanner(System.in);
+
+        double sekundy;
+        System.out.println("Podaj wiek w sekundach");
+        sekundy = scanner.nextDouble();
+
+        double rok = 31557600;
+        double Merkury = (sekundy / rok) / 0.2408467;
+        double Wenus =  (sekundy / rok) / 0.61519726;
+        double Mars =  (sekundy / rok) / 1.8808158;
+        double Jowisz =  (sekundy / rok) / 11.862615;
+        double Saturn =  (sekundy / rok) / 29.447498;
+        double Uran =  (sekundy / rok) / 84.016846;
+        double Neptun =  (sekundy / rok) / 164.79132;
+
+        Scanner scanner1 = new Scanner(System.in);
+        System.out.println("Dla której planety wyliczyć wiek?: 1-Ziemia, 2-Merkury, 3-Wenus, 4-Mars, 5-Jowisz, 6-Saturn, 7-Uran, 8-Neptun ");
+        String planeta = scanner1.nextLine();
+
+        switch(planeta){
+            case "1" -> System.out.println(sekundy / rok);
+            case "2" -> System.out.println(Merkury);
+            case "3" -> System.out.println(Wenus);
+            case "4" -> System.out.println(Mars);
+            case "5" -> System.out.println(Jowisz);
+            case "6" -> System.out.println(Saturn);
+            case "7" -> System.out.println(Uran);
+            case "8" -> System.out.println(Neptun);
+            default -> System.out.println("Nie ma takiej planety");
+        }
+    }
+    public static void zad13() {
+        System.out.println("zad13: ");
+        Scanner scanner = new Scanner(System.in);
+
+        int n;
+        System.out.println("Podaj wartość n ");
+        n = scanner.nextInt();
+
+        int[] mojaTab = new int[n];
+
+        for (int i = 0; i < mojaTab.length; i++) {
+            System.out.println("Podaj kolejne wartości tablicy: ");
+            mojaTab[i] = scanner.nextInt();
+        }
+        int max = mojaTab[0];
+        for(int i =0; i < mojaTab.length; i++){
+            if (mojaTab[i] > max)
+                max = mojaTab[i];
+        }
+//        System.out.println();
+        System.out.println(max);
+
+
+    }
+    public static void zad14() {
+        System.out.println("zad14: ");
+        System.out.println("Napisałem program w notatniku i zapsałem z rozszerzeniem .java, skompilowałem go za pomocą komendy 'javac', tworzac plik z rozszerzeniem javac, uruchomiłem program za pomocą komandy 'java'");
+    }
+}
